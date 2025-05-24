@@ -1,5 +1,16 @@
 # Wardriving
-A database for storing netstumbler captures.
+A database for storing netstumbler captures. (Or captures from other wardriving programs down the road)
+
+A 'Session' is an output file produced by running the scanner for a period of time.
+
+I want the database to serve a few purposes.
+- Store a list of mac addresses.
+- Provide coordinates on when and where this mac address was 'seen' at
+- What the name of the network was called at the time that it was seen.'
+
+A few other considerations
+- A mac address could technically be seen in multiple sessions. Or locations.
+- No duplicates in the master mac address table.
 
 ## Schema
 
