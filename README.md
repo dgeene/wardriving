@@ -43,3 +43,9 @@ A mac address is seen at a location and with a ssid name at a specific time
 mac_id
 mac
 ```
+
+## Running tests
+From the project root
+```shell
+python -m pytest -vs tests/test_main.py
+```

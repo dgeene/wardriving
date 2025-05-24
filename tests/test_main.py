@@ -68,7 +68,9 @@ class TestDiscardDuplicates:
     It seems without GPS the scans have duplicate ssids. A lot of them.
     """
     def test_duplicate_record_filtering(self):
-        line_queue = deque(maxlen=100)
+        total_dupes = 1165 # based on ./sample_data/session7-nogps.txt
+        queue_depth = 100
+        line_queue = deque(maxlen=queue_depth)
         hash_set = set()
 
         s = Session()
@@ -80,6 +82,7 @@ class TestDiscardDuplicates:
             first_record = None
             current_record = None
             current_hash = None
+            duplicates = 0
             for row in reader:
                 if not first_record:
                     first_record = True
@@ -92,13 +95,16 @@ class TestDiscardDuplicates:
                 current_hash = current_record.hashify()
                 if current_hash in hash_set:
                     #print('Duplicate record!')
+                    duplicates += 1
                     continue
                 line_queue.append((current_record, current_hash))
                 hash_set.add(current_hash)
-                if len(line_queue) > 30:
+                if len(line_queue) > queue_depth:
                     _, old_hash = line_queue[0]
                     hash_set.discard(old_hash)
                 #current_record = row
                 print(row)
             #s.last_record = Record(current_record)
+            print(f'Duplicates: {duplicates}')
+            assert total_dupes == duplicates, 'incorrect duplicate count'
 

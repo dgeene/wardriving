@@ -91,7 +91,8 @@ class Session:
 
 
 def main(filename):
-    line_queue = deque(maxlen=100)
+    queue_depth = 100
+    line_queue = deque(maxlen=queue_depth)
     hash_set = set()
 
     s = Session()
@@ -108,6 +109,7 @@ def main(filename):
         first_record = None
         current_record = None
         current_hash = None
+        duplicates = 0
         for row in reader:
             if not first_record:
                 first_record = True
@@ -120,15 +122,17 @@ def main(filename):
             current_hash = current_record.hashify()
             if current_hash in hash_set:
                 # skip duplicate entries
+                duplicates += 1
                 continue
             line_queue.append((current_record, current_hash))
             hash_set.add(current_hash)
-            if len(line_queue) > 30:
+            if len(line_queue) > queue_depth:
                 _, old_hash = line_queue[0]
                 hash_set.discard(old_hash)
             print(current_record)
         s.last_record = current_record
-        print(f"Scan stats - Date:'{s.scan_date}' Duration: '{s.duration}'")
+        print(f"Scan stats - Date:'{s.scan_date}' Scan Duration: '{s.duration}'")
+        print(f"Duplicate entries: {duplicates}")
 
 
 
