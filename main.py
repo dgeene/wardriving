@@ -23,7 +23,6 @@ import csv
 import hashlib
 from datetime import datetime
 from collections import deque
-from sqlalchemy import create_engine
 import models
 
 pdate = r'\d{4}-\d{2}-\d{2}'
@@ -139,8 +138,5 @@ def main(filename):
 
 
 if __name__ == '__main__':
-    engine = create_engine('sqlite+pysqlite:///:memory:', echo=True)
-    # prints the DDL for table creation
-    print(models.Base.metadata.create_all(engine))
     #main('/home/anon/python/wardriving/sample_data/session1')
-    #main('/home/anon/python/wardriving/sample_data/session7-nogps.txt')
+    main('/home/anon/python/wardriving/sample_data/session7-nogps.txt')

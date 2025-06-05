@@ -1,4 +1,4 @@
-from sqlalchemy import String
+from sqlalchemy import String, Date
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
 class Base(DeclarativeBase):
@@ -8,10 +8,10 @@ class Session(Base):
     __tablename__ = 'session'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    date: Mapped[str] = mapped_column(String(20))
+    scan_date: Mapped[str] = mapped_column(Date)
 
     def __repr__(self) -> str:
-        return f'Scan Session: {self.date}'
+        return f'Scan Session: {self.scan_date}'
 
 class Macaddress(Base):
     __tablename__ = 'macaddress'
