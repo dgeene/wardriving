@@ -25,3 +25,7 @@ class TestDatabase:
         session1 = Session(scan_date=s.scan_date)
         assert type(session1.scan_date) == datetime
         assert str(session1) == 'Scan Session: 2012-06-29 00:00:00'
+
+    def test_macaddress(self, database):
+        s = Macaddress(mac='c0:c1:c0:01:30:c9')
+        print(s.mac)
